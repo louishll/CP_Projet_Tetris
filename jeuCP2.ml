@@ -1,4 +1,13 @@
-open CPutil;;
+(*
+graphique tétris
+taille carré : 20
+marge droite : 50
+marge gauche : 50
+marge bas : 50
+marge haut : 100
+taille bord de zone : 10
+grille du tétris = 320 610
+ *)
 
 (* -------------------------- *)
 (* -------------------------- *)
@@ -20,12 +29,27 @@ let mywait(x : float) : unit =
 (* --------------------------------- *)
 (* --------------------------------- *)
 
-type t_point = {x : int ; y : int} ;;
+type t_point = {x : int ; y : int};;
+
 let dilat : int = 20 ;;
+
 (*notre base_draw prend (0,0) comme valeur donc on ne l'utilise pas dans la fonction convert*)
 let convert(p, base_draw, dilat : t_point * t_point * int) : t_point =
   {x = (p.x * dilat + 60); y = (p.y * dilat + 60)}
 ;;
+
+let draw_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
+  set_color(col);
+  let new_p : t_point = convert(p, base_draw, dilat) in
+  draw_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
+;;
+
+let fill_absolute(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
+  set_color(col);
+  let new_p : t_point = convert(p, base_draw, dilat) in
+  fill_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
+;;
+(*auteur : NICOLAS*)
 
 (* ------------------------------------------------- *)
 (* ------------------------------------------------- *)

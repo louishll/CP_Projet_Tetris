@@ -1,12 +1,12 @@
 5;;(*pour ouvrir Ocaml*)
-(*graphique tétris
-taille carré : 20
+(*graphique tï¿½tris
+taille carrï¿½ : 20
 marge droite : 50
 marge gauche : 50
 marge bas : 50
 marge haut : 100
 taille bord de zone : 10
-grille du tétris = 320 610
+grille du tï¿½tris = 320 610
  *)
 
 (* -------------------------- *)
@@ -39,6 +39,8 @@ let convert(p, base_draw, dilat : t_point * t_point * int) : t_point =
 ;;
 (*AUTEUR : NICOLAS*)
 
+(*QUESTION 1*)
+
 let draw_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
   set_color(col);
   let new_p : t_point = convert(p, base_draw, dilat) in
@@ -54,17 +56,12 @@ let fill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_colo
 (*auteur : NICOLAS*)
 
 let drawfill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color) : unit =
-  fill_absolute_pt(p,base_draw,dilat,col);
-  draw_absolute_pt(p,base_draw,dilat,0)
+  fill_absolute_pt(p, base_draw, dilat, col);
+  draw_absolute_pt(p, base_draw, dilat, 0)
 ;;
 (*auteur : PIERRE*)
 
-
-let fill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
-  let new_p : t_point ={x = (p.x + base_point.x) ; y = (p.y + base_point.y)} in
-  fill_absolute_pt(new_p,base_draw,dilat,col)
-;;
-(*auteur : PIERRE*)
+(*QUESTION 2*)
 
 let draw_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
   let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
@@ -72,20 +69,39 @@ let draw_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * 
 ;;
 (*auteur : NICOLAS*)
 
-let drawfill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit = fill_relative_pt(p,base_point,base_draw,dilat,col);
-                                                                                                                      draw_relative_pt(p,base_point,base_draw,dilat,0)
+let fill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
+  let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
+  fill_absolute_pt(new_p, base_draw, dilat, col)
+;;
+(*auteur: PIERRE*)
+
+let drawfill_relative_pt(p, base_point,  base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
+  fill_relative_pt(p, base_point, base_draw, dilat, col);
+  draw_relative_pt(p, base_point, base_draw, dilat, 0)
 ;;
 (*auteur : PIERRE*)
 
 
+(*QUESTION 3*)
+
 let draw_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
   (
     for i = 0 to len(pt_list) - 1 do
-      draw_relative_pt(nth(pt_list,i), base_pt, base_draw, dilat, col)
+      draw_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
     done;
   )
 ;;
-(*auteur : NICOLAS*)
+(*auteur :NICOLAS*)
+
+let fill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
+  (
+    for i = 0 to len(pt_list) - 1 do
+      fill_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
+    done;
+  )
+;;
+
+(*auteur : NICOLAS-PIERRE*)
 
 let drawfill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit=
   fill_pt_list(pt_list,base_pt,base_draw,dilat,col);
@@ -93,10 +109,8 @@ let drawfill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_
 ;;
 (*auteur : PIERRE*)
 
+
   
-
-
-
 
 (* ------------------------------------------------- *)
 (* ------------------------------------------------- *)

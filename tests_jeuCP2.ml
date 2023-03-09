@@ -1,4 +1,4 @@
-(* blabla
+
 (*
 open CPinter;;
 open JeuCP2;;
@@ -51,7 +51,7 @@ let test_draw_absolute_pt_functional_1(status: t_test_status) : unit =
   )
 ;;
 
-(*auteurs : mï¿½lie et louis*)
+(*auteurs : mélie et louis*)
 
 (* ---------------------------- *)
 (* test de : fill_absolute_pt   *)
@@ -70,7 +70,7 @@ let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
         fill_rect(260, 50, 10, 450);
         fill_rect(50, 50, 220, 10);
         fill_absolute_pt(p, {x = 0; y = 0}, dilat, black);
-        print_string("Voyez vous un carrï¿½ noir plein en (2;2) (oui/non)");
+        print_string("Voyez vous un carré noir plein en (2;2) (oui/non)");
         let reponse_2 : string = read_line() in
         assert_equals(test_step, "carrï¿½ (2;2)", reponse_2, "oui")
       )
@@ -80,7 +80,7 @@ let test_fill_absolute_pt_functional_1(status: t_test_status) : unit =
     set_color(black);
   )
 ;;
-(*auteurs : mï¿½lie et louis*)
+(*auteurs : mélie et louis*)
 (* ---------------------------- *)
 (* test de :drawfill_absolute_pt*)
 (* ---------------------------- *)

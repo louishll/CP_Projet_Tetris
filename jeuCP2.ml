@@ -168,87 +168,9 @@ let getMat(prm : t_play) : t_color matrix = prm.mat;;
 let color_choice(t : t_color t_array) : 'a array =
  
 ;;
-(*AUTEUR : NICOLAS*)
+(*AUTEUR : Louis*)
 
-(*QUESTION 1*)
-
-let draw_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
-  set_color(col);
-  let new_p : t_point = convert(p, base_draw, dilat) in
-  draw_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
-;;
-(*auteur : NICOLAS*)
-
-let fill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color ) : unit =
-  set_color(col);
-  let new_p : t_point = convert(p, base_draw, dilat) in
-  fill_rect(new_p.x, new_p.y, dilat - 1, dilat - 1)
-;;
-(*auteur : NICOLAS*)
-
-let drawfill_absolute_pt(p, base_draw, dilat, col : t_point * t_point * int * t_color) : unit =
-  fill_absolute_pt(p, base_draw, dilat, col);
-  draw_absolute_pt(p, base_draw, dilat, 0)
-;;
-(*auteur : PIERRE*)
-
-(*QUESTION 2*)
-
-let draw_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
-  let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
-  draw_absolute_pt(new_p, base_draw, dilat, col)
-;;
-(*auteur : NICOLAS*)
-
-let fill_relative_pt(p, base_point, base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
-  let new_p : t_point = {x = p.x + base_point.x ; y = p.y + base_point.y} in
-  fill_absolute_pt(new_p, base_draw, dilat, col)
-;;
-(*auteur: PIERRE*)
-
-let drawfill_relative_pt(p, base_point,  base_draw, dilat, col : t_point * t_point * t_point * int * t_color) : unit =
-  fill_relative_pt(p, base_point, base_draw, dilat, col);
-  draw_relative_pt(p, base_point, base_draw, dilat, 0)
-;;
-(*auteur : PIERRE*)
-
-
-(*QUESTION 3*)
-
-let draw_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
-  (
-    for i = 0 to len(pt_list) - 1 do
-      draw_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
-    done;
-  )
-;;
-(*auteur :NICOLAS*)
-
-let fill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit =
-  (
-    for i = 0 to len(pt_list) - 1 do
-      fill_relative_pt(nth(pt_list, i), base_pt, base_draw, dilat, col)
-    done;
-  )
-;;
-
-(*auteur : NICOLAS-PIERRE*)
-
-let drawfill_pt_list(pt_list, base_pt, base_draw, dilat, col : t_point list * t_point * t_point * int * t_color) : unit=
-  fill_pt_list(pt_list,base_pt,base_draw,dilat,col);
-  draw_pt_list(pt_list,base_pt,base_draw,dilat,0)
-;;
-(*auteur : PIERRE*)
-
-
-  
-
-      
-                  
-                                              
-(* ------------------------------------------------- *)
-(* ------------------------------------------------- *)
-(*    Types, formes, parametrage et initialisation   *)
+(*     , formes, parametrage et initialisation       *)
 (* ------------------------------------------------- *)
 (* ------------------------------------------------- *)
 

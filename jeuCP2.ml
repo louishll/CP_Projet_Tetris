@@ -22,6 +22,75 @@ let mywait(x : float) : unit =
   done
 ;;
 
+(* ------------------------------------------------- *)
+(* ------------------------------------------------- *)
+(*    Types, formes, parametrage et initialisation   *)
+(* ------------------------------------------------- *)
+(* ------------------------------------------------- *)
+
+
+(* Types *)
+type t_point = {x : int ; y : int} ;;
+
+type 'a t_array = {len : int ; value : 'a array} ;;
+
+type t_shape = {shape : t_point list ; x_len : int ; y_len : int ; 
+                rot_rgt_base : t_point ; rot_rgt_shape : int ; 
+                rot_lft_base : t_point ; rot_lft_shape : int} ;; 
+
+type t_cur_shape = {base : t_point ref ; shape : int ref ; color : t_color ref} ;;
+
+
+type t_param_time = {init : float ; extent : float ; ratio : float} ;;
+
+type t_param_graphics = 
+    {base : t_point ; dilat : int ; color_arr : t_color t_array} ;;
+
+type t_param = 
+  {time : t_param_time ; 
+   mat_szx : int ; mat_szy : int ;
+   graphics : t_param_graphics ; 
+   shapes : t_shape t_array
+} ;;
+
+type t_play = {par : t_param ; cur_shape : t_cur_shape ; mat : t_color matrix} ;;
+
+
+(* Initialisation de quelques formes et des parametres *)
+
+let init_sh011() : t_shape = 
+  {shape = [{x = 0 ; y = 0} ; {x = 1 ; y = 0} ; {x = 2 ; y = 0} ; {x = 3 ; y = 0}] ; 
+  x_len = 4 ; y_len = 1 ; 
+  rot_rgt_base = {x = 1 ;  y = 1} ; rot_rgt_shape = 1 ; 
+  rot_lft_base = {x = 2 ; y = 1} ; rot_lft_shape = 1} 
+;;
+let init_sh112() : t_shape = 
+  {shape = [{x = 0 ; y = 0} ; {x = 0 ; y = -1} ; {x = 0 ; y = -2} ; {x = 0 ; y = -3}] ; 
+  x_len = 1 ; y_len = 4 ; 
+  rot_rgt_base = {x = -2 ;  y = -1} ; rot_rgt_shape = 0 ; 
+  rot_lft_base = {x = -1 ; y = -1} ; rot_lft_shape = 0} 
+;;
+let init_sh211() : t_shape = 
+  {shape = [{x = 0 ; y = 0} ; {x = 0 ; y = -1} ; {x = 1 ; y = 0} ; {x = 1 ; y = -1}] ; 
+  x_len = 2 ; y_len = 2 ; 
+  rot_rgt_base = {x = 0 ;  y = 0} ; rot_rgt_shape = 2 ; 
+  rot_lft_base = {x = 0 ;  y = 0} ; rot_lft_shape = 2} 
+;;
+
+let init_shapes() : t_shape t_array = 
+  {len = 3 ; value = [| init_sh011() ; init_sh112() ; init_sh211() |]} 
+;;
+let init_color() : t_color t_array = 
+  {len = 7 ; value = [|blue ; red ; green ; yellow ; cyan ; magenta ; grey|]} ;;
+
+let init_param() : t_param = 
+    {
+    time = {init = 1.0 ; extent = 10.0 ; ratio = 0.8} ; 
+    mat_szx = 15 ; mat_szy = 28 ;
+    graphics = {base = {x = 50 ; y = 50} ; dilat = 20 ; color_arr = init_color()} ; 
+    shapes = init_shapes()
+    }
+;;
 
 (* --------------------------------- *)
 (* --------------------------------- *)
@@ -29,7 +98,6 @@ let mywait(x : float) : unit =
 (* --------------------------------- *)
 (* --------------------------------- *)
 
-type t_point = {x : int ; y : int} ;;
 
 let dilat : int = 20 ;;
 (*notre base_draw prend (0,0) comme valeur donc on ne l'utilise pas dans la fonction convert*)
@@ -163,79 +231,9 @@ let getMat(prm : t_play) : t_color matrix = prm.mat;;
 
 (*Question 7*)
 
-let color_choice(t : t_color t_array) : 'a array =
- 
-;;
+
 (*AUTEUR : Louis *)
 
-(* ------------------------------------------------- *)
-(* ------------------------------------------------- *)
-(*    Types, formes, parametrage et initialisation   *)
-(* ------------------------------------------------- *)
-(* ------------------------------------------------- *)
-
-
-(* Types *)
-
-type 'a t_array = {len : int ; value : 'a array} ;;
-
-type t_shape = {shape : t_point list ; x_len : int ; y_len : int ; 
-                rot_rgt_base : t_point ; rot_rgt_shape : int ; 
-                rot_lft_base : t_point ; rot_lft_shape : int} ;; 
-
-type t_cur_shape = {base : t_point ref ; shape : int ref ; color : t_color ref} ;;
-
-
-type t_param_time = {init : float ; extent : float ; ratio : float} ;;
-
-type t_param_graphics = 
-    {base : t_point ; dilat : int ; color_arr : t_color t_array} ;;
-
-type t_param = 
-  {time : t_param_time ; 
-   mat_szx : int ; mat_szy : int ;
-   graphics : t_param_graphics ; 
-   shapes : t_shape t_array
-} ;;
-
-type t_play = {par : t_param ; cur_shape : t_cur_shape ; mat : t_color matrix} ;;
-
-
-(* Initialisation de quelques formes et des parametres *)
-
-let init_sh011() : t_shape = 
-  {shape = [{x = 0 ; y = 0} ; {x = 1 ; y = 0} ; {x = 2 ; y = 0} ; {x = 3 ; y = 0}] ; 
-  x_len = 4 ; y_len = 1 ; 
-  rot_rgt_base = {x = 1 ;  y = 1} ; rot_rgt_shape = 1 ; 
-  rot_lft_base = {x = 2 ; y = 1} ; rot_lft_shape = 1} 
-;;
-let init_sh112() : t_shape = 
-  {shape = [{x = 0 ; y = 0} ; {x = 0 ; y = -1} ; {x = 0 ; y = -2} ; {x = 0 ; y = -3}] ; 
-  x_len = 1 ; y_len = 4 ; 
-  rot_rgt_base = {x = -2 ;  y = -1} ; rot_rgt_shape = 0 ; 
-  rot_lft_base = {x = -1 ; y = -1} ; rot_lft_shape = 0} 
-;;
-let init_sh211() : t_shape = 
-  {shape = [{x = 0 ; y = 0} ; {x = 0 ; y = -1} ; {x = 1 ; y = 0} ; {x = 1 ; y = -1}] ; 
-  x_len = 2 ; y_len = 2 ; 
-  rot_rgt_base = {x = 0 ;  y = 0} ; rot_rgt_shape = 2 ; 
-  rot_lft_base = {x = 0 ;  y = 0} ; rot_lft_shape = 2} 
-;;
-
-let init_shapes() : t_shape t_array = 
-  {len = 3 ; value = [| init_sh011() ; init_sh112() ; init_sh211() |]} 
-;;
-let init_color() : t_color t_array = 
-  {len = 7 ; value = [|blue ; red ; green ; yellow ; cyan ; magenta ; grey|]} ;;
-
-let init_param() : t_param = 
-    {
-    time = {init = 1.0 ; extent = 10.0 ; ratio = 0.8} ; 
-    mat_szx = 15 ; mat_szy = 28 ;
-    graphics = {base = {x = 50 ; y = 50} ; dilat = 20 ; color_arr = init_color()} ; 
-    shapes = init_shapes()
-    }
-;;
 
 (* ----------------------------------------------- *)
 (* ----------------------------------------------- *)
